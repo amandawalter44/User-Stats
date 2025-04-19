@@ -11,7 +11,7 @@ export default tseslint.config(
   {
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
       'plugin:jsx-a11y/recommended',
       'plugin:prettier/recommended',
     ],
@@ -19,6 +19,8 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
     },
     plugins: {
       'react-hooks': reactHooks,
