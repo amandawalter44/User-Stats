@@ -26,7 +26,7 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'jsx-a11y': jsxA11y,
-      prettier: prettier,
+      prettier,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
