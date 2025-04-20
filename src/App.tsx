@@ -1,5 +1,5 @@
 import './App.css';
-import UserStats from './Components/UserStats';
+import UserStats from '../my-app/src/Components/UserStats';
 
 function App() {
   return <UserStats />;

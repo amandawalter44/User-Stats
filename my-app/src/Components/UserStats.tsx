@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './UserStats.module.scss';
+import UsersList from './UsersList';
 
 const UserStats = () => {
   const [numUsers, setNumUsers] = useState(200);
@@ -34,6 +35,8 @@ const UserStats = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+
+      <UsersList nationality="US" />
     </div>
   );
 };
