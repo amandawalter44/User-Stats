@@ -1,28 +1,22 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styles from './UserStats.module.scss';
 import UsersList from './UsersList';
-import { loadQuery, PreloadedQuery } from 'react-relay/hooks';
-import { RelayEnvironment } from '../relay/RelayEnvironment';
+import { useQueryLoader } from 'react-relay/hooks';
 import { UsersByNationalityQuery } from '../relay/queries/UsersByNationalityQuery';
 import type { UsersByNationalityQuery as UsersByNationalityQueryType } from '../__generated__/UsersByNationalityQuery.graphql';
+import { startTransition } from 'react';
 
 const UserStats = () => {
   const [numUsers, setNumUsers] = useState(200);
   const [usersNationality, setUsersNationality] = useState('us');
-  console.log('RelayEnvironment:', RelayEnvironment);
 
-  const preloadedQuery: PreloadedQuery<UsersByNationalityQueryType> =
-    useMemo(() => {
-      return loadQuery(RelayEnvironment, UsersByNationalityQuery, {
-        nat: usersNationality.toUpperCase(),
-      });
-    }, [usersNationality]);
+  const [queryRef, loadQuery] = useQueryLoader<UsersByNationalityQueryType>(UsersByNationalityQuery);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Number of Users', numUsers);
-    console.log('Nationality of Users', usersNationality);
-    // Refetch
+    startTransition(() => {
+      loadQuery({ nat: usersNationality, numResults: numUsers });
+    });
   };
 
   return (
@@ -49,7 +43,7 @@ const UserStats = () => {
         <button type="submit">Submit</button>
       </form>
 
-      <UsersList preloadedQuery={preloadedQuery} />
+      {queryRef && <UsersList preloadedQuery={queryRef} />}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e25d8ec8915f9403efa8fb217684e91>>
+ * @generated SignedSource<<49db0f5bb2b6cc17f7e07d2a845c4ad6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest } from 'relay-runtime';
 export type Gender = "female" | "male" | "%future added value";
 export type UsersByNationalityQuery$variables = {
   nat: string;
+  numResults?: number | null | undefined;
 };
 export type UsersByNationalityQuery$data = {
   readonly users: ReadonlyArray<{
@@ -39,6 +40,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "nat"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "numResults"
   }
 ],
 v1 = [
@@ -51,9 +57,9 @@ v1 = [
         "variableName": "nat"
       },
       {
-        "kind": "Literal",
+        "kind": "Variable",
         "name": "results",
-        "value": 20
+        "variableName": "numResults"
       }
     ],
     "concreteType": "User",
@@ -151,16 +157,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "debe4fe62f9c549f3a458d07a82f3681",
+    "cacheID": "bff8c4403a8f915b5c382810fda80ddd",
     "id": null,
     "metadata": {},
     "name": "UsersByNationalityQuery",
     "operationKind": "query",
-    "text": "query UsersByNationalityQuery(\n  $nat: String!\n) {\n  users(nat: $nat, results: 20) {\n    name {\n      first\n      last\n    }\n    gender\n    dob {\n      age\n    }\n    location {\n      state\n    }\n  }\n}\n"
+    "text": "query UsersByNationalityQuery(\n  $nat: String!\n  $numResults: Int\n) {\n  users(nat: $nat, results: $numResults) {\n    name {\n      first\n      last\n    }\n    gender\n    dob {\n      age\n    }\n    location {\n      state\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b9b5664e6dcb8d0322c745101c3e5d22";
+(node as any).hash = "35c29e29ee27a4e4b3534d9d4d95e9df";
 
 export default node;

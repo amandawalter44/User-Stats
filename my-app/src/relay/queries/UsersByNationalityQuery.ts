@@ -1,8 +1,8 @@
 import { graphql } from 'babel-plugin-relay/macro';
 
 export const UsersByNationalityQuery = graphql`
-  query UsersByNationalityQuery($nat: String!) {
-    users(nat: $nat, results: 20) {
+  query UsersByNationalityQuery($nat: String!, $numResults: Int) {
+    users(nat: $nat, results: $numResults) {
       name {
         first
         last
