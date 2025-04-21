@@ -96,6 +96,23 @@ export default function UsersList({ preloadedQuery }: Props) {
     return percentages;
   };
 
+  const calculateLastNameLengthCounts = (
+    users: UsersByNationalityQuery$data['users'],
+  ): Record<number, number> => {
+    const lengthCounts: Record<number, number> = {};
+    if (!users) return { 0: 0 };
+
+    for (const user of users) {
+      const lastName = user?.name?.last;
+      if (lastName) {
+        const length = lastName.length;
+        lengthCounts[length] = (lengthCounts[length] || 0) + 1;
+      }
+    }
+
+    return lengthCounts;
+  };
+
   if (!data?.users) return null;
 
   return (
@@ -126,6 +143,16 @@ export default function UsersList({ preloadedQuery }: Props) {
               </div>
             ),
         )}
+      </section>
+      <section aria-labelledby="last-name-length-heading">
+        <h2 id="last-name-length-heading" className="sr-only">
+          User Count by Last Name Length
+        </h2>
+        {Object.entries(calculateLastNameLengthCounts(data.users)).map(([length, count]) => (
+          <div key={length}>
+            <strong>{length} letters:</strong> {count} user{count > 1 ? 's' : ''}
+          </div>
+        ))}
       </section>
     </>
   );

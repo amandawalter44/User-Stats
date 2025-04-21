@@ -59,10 +59,10 @@ const UserStats = () => {
           <select
             id="nationality"
             value={usersNationality}
-            onChange={(e) => setUsersNationality(e.target.value.toLowerCase())}
+            onChange={(e) => setUsersNationality(e.target.value)}
           >
             {NATIONALITIES.map((nat) => (
-              <option key={nat} value={nat.toLowerCase()}>
+              <option key={nat} value={nat}>
                 {nat}
               </option>
             ))}
