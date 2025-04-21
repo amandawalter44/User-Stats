@@ -47,6 +47,7 @@
     "@types/relay-runtime": "^18.2.5",
     "ajv": "^7.2.4",
     "babel-plugin-relay": "^18.2.0",
+    "prettier": "^3.5.3",
     "react-relay": "^18.2.0",
     "relay-compiler": "^18.2.0",
     "sass": "^1.86.3"

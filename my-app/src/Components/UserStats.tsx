@@ -10,8 +10,32 @@ const UserStats = () => {
   const [numUsers, setNumUsers] = useState(200);
   const [usersNationality, setUsersNationality] = useState('us');
 
-  const [queryRef, loadQuery] = useQueryLoader<UsersByNationalityQueryType>(UsersByNationalityQuery);
+  const [queryRef, loadQuery] =
+    useQueryLoader<UsersByNationalityQueryType>(UsersByNationalityQuery);
 
+  const NATIONALITIES = [
+    'AU',
+    'BR',
+    'CA',
+    'CH',
+    'DE',
+    'DK',
+    'ES',
+    'FI',
+    'FR',
+    'GB',
+    'IE',
+    'IN',
+    'IR',
+    'MX',
+    'NL',
+    'NO',
+    'NZ',
+    'RS',
+    'TR',
+    'UA',
+    'US',
+  ];
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(() => {
@@ -32,13 +56,17 @@ const UserStats = () => {
           />
         </div>
         <div>
-          <label htmlFor="nationality">Nationality of Users:</label>
-          <input
+          <select
             id="nationality"
-            type="text"
             value={usersNationality}
-            onChange={(e) => setUsersNationality(e.target.value)}
-          />
+            onChange={(e) => setUsersNationality(e.target.value.toLowerCase())}
+          >
+            {NATIONALITIES.map((nat) => (
+              <option key={nat} value={nat.toLowerCase()}>
+                {nat}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit">Submit</button>
       </form>
