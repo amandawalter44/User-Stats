@@ -8,13 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "relay": "relay-compiler"
-  },
-  "relay": {
-    "src": "./src",
-    "schema": "./schema.graphql",
-    "language": "typescript",
-    "artifactDirectory": "./src/__generated__"
+    "relay": "mkdir -p ./src/__generated__ && relay-compiler --src ./src --schema ./schema.graphql --language typescript --watch"
   },
   "dependencies": {
     "process": "^0.11.10",

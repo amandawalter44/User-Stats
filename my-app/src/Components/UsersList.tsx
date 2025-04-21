@@ -1,7 +1,9 @@
 import { useLazyLoadQuery } from 'react-relay';
-import { UsersByNationalityQuery } from '../../../src/relay/queries/UsersByNationalityQuery';
-import type { UsersByNationalityQuery as UsersByNationalityQueryType } from '../../../src/__generated__/UsersByNationalityQuery.graphql';
-
+import { UsersByNationalityQuery } from '../relay/queries/UsersByNationalityQuery';
+import type {
+  UsersByNationalityQuery as UsersByNationalityQueryType,
+  UsersByNationalityQuery$data,
+} from '../__generated__/UsersByNationalityQuery.graphql';
 type Props = {
   nationality: string;
 };
@@ -10,9 +12,10 @@ export default function UsersList({ nationality }: Props) {
   const data = useLazyLoadQuery<UsersByNationalityQueryType>(
     UsersByNationalityQuery,
     { nat: nationality },
-    { fetchPolicy: 'store-or-network' }, // optional
+    { fetchPolicy: 'store-or-network' },
   );
-  if (!data || !data.users) return;
+  console.log('DATA?? ', data);
+  if (!data || !data.users) return null;
   return (
     <div>
       <h2>Users from {nationality}</h2>

@@ -22,5 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "my-app/src/Components"]
+  "include": [
+    "src",
+    "my-app/src/Components",
+    "my-app/src/__generated__",
+    "my-app/src/relay"
+  ]
 }
