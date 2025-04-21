@@ -51,5 +51,8 @@
     "react-relay": "^18.2.0",
     "relay-compiler": "^18.2.0",
     "sass": "^1.86.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

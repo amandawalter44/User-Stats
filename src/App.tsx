@@ -5,8 +5,6 @@ import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import './App.css';
 
 function App() {
-  console.log('RelayEnvironment:', RelayEnvironment);
-
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
       <UserStats />
