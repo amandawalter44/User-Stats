@@ -53,23 +53,80 @@ export default function UsersList({ preloadedQuery }: Props) {
     return genderPercentages;
   };
 
-  console.log('PERCENTAGE CALCULATED ', calculateGenderPercentage(data.users));
   const genderPercentages = calculateGenderPercentage(data.users);
+
+  type AgeRange = '0-20' | '21-40' | '41-60' | '61-80' | '81-100' | '100+';
+
+  const calculateAgeRangePercentages = (
+    users: UsersByNationalityQuery$data['users'],
+  ): Record<AgeRange, number> => {
+    const ageRanges: Record<AgeRange, number> = {
+      '0-20': 0,
+      '21-40': 0,
+      '41-60': 0,
+      '61-80': 0,
+      '81-100': 0,
+      '100+': 0,
+    };
+
+    if (!users || !users.length) return ageRanges;
+
+    const validAges = users.filter((user) => user?.dob?.age != null);
+
+    for (const user of validAges) {
+      const age = user?.dob?.age!;
+      if (age <= 20) ageRanges['0-20']++;
+      else if (age <= 40) ageRanges['21-40']++;
+      else if (age <= 60) ageRanges['41-60']++;
+      else if (age <= 80) ageRanges['61-80']++;
+      else if (age <= 100) ageRanges['81-100']++;
+      else ageRanges['100+']++;
+    }
+
+    const total = validAges.length;
+
+    const percentages = Object.entries(ageRanges).reduce(
+      (acc, [range, count]) => {
+        acc[range as AgeRange] = total > 0 ? (count / total) * 100 : 0;
+        return acc;
+      },
+      {} as Record<AgeRange, number>,
+    );
+
+    return percentages;
+  };
+
   if (!data?.users) return null;
 
   return (
-    <section aria-labelledby="gender-stats-heading">
-      <h2 id="gender-stats-heading" className="sr-only">
-        User Gender Distribution
-      </h2>
-      {Object.entries(genderPercentages).map(
-        ([gender, percentage]) =>
-          percentage > 0 && (
-            <div key={gender}>
-              <strong>{gender}:</strong> {percentage.toFixed(1)}%
-            </div>
-          ),
-      )}
-    </section>
+    <>
+      <section aria-labelledby="gender-stats-heading">
+        <h2 id="gender-stats-heading" className="sr-only">
+          Gender
+        </h2>
+        {Object.entries(genderPercentages).map(
+          ([gender, percentage]) =>
+            percentage > 0 && (
+              <div key={gender}>
+                <strong>{gender}:</strong> {percentage.toFixed(1)}%
+              </div>
+            ),
+        )}
+      </section>
+
+      <section aria-labelledby="age-range-heading">
+        <h2 id="age-range-heading" className="sr-only">
+          Age Range
+        </h2>
+        {Object.entries(calculateAgeRangePercentages(data.users)).map(
+          ([range, percentage]) =>
+            percentage > 0 && (
+              <div key={range}>
+                <strong>{range}:</strong> {percentage.toFixed(1)}%
+              </div>
+            ),
+        )}
+      </section>
+    </>
   );
 }
