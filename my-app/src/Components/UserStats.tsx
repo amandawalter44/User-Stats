@@ -8,7 +8,7 @@ import { startTransition } from 'react';
 
 const UserStats = () => {
   const [numUsers, setNumUsers] = useState(200);
-  const [usersNationality, setUsersNationality] = useState('us');
+  const [usersNationality, setUsersNationality] = useState('US');
 
   const [queryRef, loadQuery] =
     useQueryLoader<UsersByNationalityQueryType>(UsersByNationalityQuery);
