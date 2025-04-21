@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0eda9c828b69101f7e4830d6827a2266>>
+ * @generated SignedSource<<2e25d8ec8915f9403efa8fb217684e91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,11 @@ export type UsersByNationalityQuery$data = {
   readonly users: ReadonlyArray<{
     readonly dob: {
       readonly age: number | null | undefined;
-      readonly date: any | null | undefined;
     } | null | undefined;
     readonly gender: Gender | null | undefined;
+    readonly location: {
+      readonly state: string | null | undefined;
+    } | null | undefined;
     readonly name: {
       readonly first: string | null | undefined;
       readonly last: string | null | undefined;
@@ -103,14 +105,25 @@ v1 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "date",
+            "name": "age",
             "storageKey": null
-          },
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "UserLocation",
+        "kind": "LinkedField",
+        "name": "location",
+        "plural": false,
+        "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "age",
+            "name": "state",
             "storageKey": null
           }
         ],
@@ -138,16 +151,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e9daee37ab04ed43d2366d4c83ab56b5",
+    "cacheID": "debe4fe62f9c549f3a458d07a82f3681",
     "id": null,
     "metadata": {},
     "name": "UsersByNationalityQuery",
     "operationKind": "query",
-    "text": "query UsersByNationalityQuery(\n  $nat: String!\n) {\n  users(nat: $nat, results: 20) {\n    name {\n      first\n      last\n    }\n    gender\n    dob {\n      date\n      age\n    }\n  }\n}\n"
+    "text": "query UsersByNationalityQuery(\n  $nat: String!\n) {\n  users(nat: $nat, results: 20) {\n    name {\n      first\n      last\n    }\n    gender\n    dob {\n      age\n    }\n    location {\n      state\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4dbb739e3244403177bd69056acc99d2";
+(node as any).hash = "b9b5664e6dcb8d0322c745101c3e5d22";
 
 export default node;

@@ -9,8 +9,10 @@ export const UsersByNationalityQuery = graphql`
       }
       gender
       dob {
-        date
         age
+      }
+      location {
+        state
       }
     }
   }

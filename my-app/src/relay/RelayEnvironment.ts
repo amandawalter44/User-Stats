@@ -26,7 +26,7 @@ function fetchGraphQL(
   }).then((response) => response.json());
 }
 
-export const environment = new Environment({
+export const RelayEnvironment = new Environment({
   network: Network.create(fetchGraphQL),
   store: new Store(new RecordSource()),
 });
