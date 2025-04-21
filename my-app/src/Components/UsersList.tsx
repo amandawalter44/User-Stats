@@ -16,8 +16,6 @@ export default function UsersList({ preloadedQuery }: Props) {
     preloadedQuery,
   );
 
-  console.log('DATA', data);
-
   const calculateGenderPercentage = (
     users: UsersByNationalityQuery$data['users'],
   ): Record<Gender, number> => {
@@ -113,6 +111,42 @@ export default function UsersList({ preloadedQuery }: Props) {
     return lengthCounts;
   };
 
+  const calculateStateCounts = (
+    users: UsersByNationalityQuery$data['users'],
+  ):
+    | {
+        state: string;
+        percentage: number;
+      }[]
+    | undefined => {
+    if (!users) return;
+
+    const stateCounts: Record<string, number> = users.reduce(
+      (acc, user) => {
+        const state = user?.location?.state;
+        if (state) {
+          acc[state] = (acc[state] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+
+    const topStates = Object.entries(stateCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+
+    const totalUsers = users.length;
+
+    const topStatePercentages = topStates.map(([state, count]) => ({
+      state,
+      percentage: (count / totalUsers) * 100,
+    }));
+
+    return topStatePercentages;
+  };
+
+  const topStatePercentages = calculateStateCounts(data.users);
   if (!data?.users) return null;
 
   return (
@@ -153,6 +187,17 @@ export default function UsersList({ preloadedQuery }: Props) {
             <strong>{length} letters:</strong> {count} user{count > 1 ? 's' : ''}
           </div>
         ))}
+      </section>
+      <section aria-labelledby="top-states-heading">
+        <h2 id="top-states-heading">Top 10 States by User Percentage</h2>
+        <ul>
+          {topStatePercentages &&
+            topStatePercentages.map(({ state, percentage }) => (
+              <li key={state}>
+                {state}: {percentage.toFixed(1)}%
+              </li>
+            ))}
+        </ul>
       </section>
     </>
   );
